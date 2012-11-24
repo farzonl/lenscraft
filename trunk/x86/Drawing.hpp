@@ -2,8 +2,9 @@
 
 #include "Effects.hpp"
 //#include "opencv2\gpu\gpu.hpp"
+#ifndef __clang__
 #include <omp.h>
-
+#endif
 class Drawing : public Effects
 {
 	double sp,sr;

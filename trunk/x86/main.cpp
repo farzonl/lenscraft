@@ -35,9 +35,9 @@ void update_loop(void)
 	while (glfwGetWindowParam(GLFW_OPENED) == GL_TRUE)
 	{
 		if (glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS)
-		{ 
-			
-			break; 
+		{
+
+			break;
 		}
 
 		const double currentTime = glfwGetTime();
@@ -64,7 +64,7 @@ void update_loop(void)
 	}
 }
 
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[])
 {
 	if (glfwInit() != GL_TRUE)
 	{
