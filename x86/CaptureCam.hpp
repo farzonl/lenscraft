@@ -1,15 +1,15 @@
 #pragma once
 
-#include <opencv\cv.h>
-#include <opencv\highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <GL/glew.h>
 #include <GL/glfw.h>
 //#include <Windows.h>
 //#include <thread>
 #include <queue>
 
-extern CRITICAL_SECTION _critSection;
-extern CONDITION_VARIABLE empty,full;
+//extern CRITICAL_SECTION _critSection;
+//extern CONDITION_VARIABLE empty,full;
 
 void cameraThread(void* param);
 

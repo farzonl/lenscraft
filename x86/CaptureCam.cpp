@@ -1,7 +1,7 @@
 #include "CaptureCam.hpp"
 #include <iostream>
 
-CRITICAL_SECTION _critSection;
+//CRITICAL_SECTION _critSection;
 
 
 CaptureCam::CaptureCam():capture( CV_CAP_ANY ),queueMat()
@@ -13,7 +13,7 @@ CaptureCam::CaptureCam():capture( CV_CAP_ANY ),queueMat()
 	// Grab the device
 
 	capture.grab();
-	InitializeCriticalSection (& _critSection);
+	//InitializeCriticalSection (& _critSection);
 }
 
 
@@ -23,7 +23,7 @@ CaptureCam::~CaptureCam(void)
 	capture.release();
 	glfwDestroyThread(this->t_id);
 	//glfwDestroyMutex(this->m_mutex);
-	DeleteCriticalSection (& _critSection);
+	//DeleteCriticalSection (& _critSection);
 }
 
 cv::Mat CaptureCam::getMat()     
@@ -58,12 +58,12 @@ void cameraThread(void* param)
 void  CaptureCam::getFrame()
 {
 	//glfwLockMutex(m_mutex);
-	EnterCriticalSection (& _critSection);
+	//EnterCriticalSection (& _critSection);
 	//camFrameRead.release();
 	capture.retrieve(camFrame);
 	cv::flip(camFrame,camFrame,-1 );
 	queueMat.push(camFrame);
-	LeaveCriticalSection (& _critSection);
+	//LeaveCriticalSection (& _critSection);
 	//camFrameRead = camFrame;
 	//glfwUnlockMutex(m_mutex);
 }

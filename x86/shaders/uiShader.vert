@@ -13,3 +13,4 @@ void main() {
 	gl_Position = vec4(pixel_coords.xy, 0.0, 1.0);
 	o_texture = a_texture;
 }
+

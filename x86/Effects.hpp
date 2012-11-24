@@ -1,6 +1,6 @@
 #pragma once
-#include <opencv\cv.h>
-#include <opencv\highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <GL/glew.h>
 #include <GL/glfw.h>
 
