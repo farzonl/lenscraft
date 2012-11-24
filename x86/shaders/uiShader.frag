@@ -14,3 +14,4 @@ void main() {
 		gl_FragColor = vec4(texture2D(u_texture, o_texture).rgb, 1.0f);
 	}
 }
+

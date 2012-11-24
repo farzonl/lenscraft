@@ -50,6 +50,6 @@ class BoothUI
 	int width,height;
 
 	glm::mat4 mVMatrix;
-	std::vector<std::unique_ptr<QUAD_DEF::Rectangle>> layout;
+	std::vector< std::unique_ptr<QUAD_DEF::Rectangle> > layout;
 	cv::Mat cur_mat;
 };

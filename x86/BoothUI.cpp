@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 #include <GL/glfw.h>
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -14,9 +14,9 @@
 #include "radialBlur.hpp"
 #include "mirror.hpp"
 #include "SobelTex.hpp"
-
+#ifndef __clang__
 #include <omp.h>
-
+#endif
 //#include <tbb/parallel_for.h>
 //#include <ppl.h>//parallel_for
 
@@ -148,6 +148,14 @@ void BoothUI::render(void)
 		LeaveCriticalSection (& _critSection);
 		}*/
 		//#pragma unroll ROW_REC*COL_REC
+
+		#ifdef __clang__
+		for(unsigned int i = 0; i < layout.size();i++)
+        {
+			layout[i]->eff->performEffect(cur_mat);
+            layout[i]->render(uiPositionHandle, -1, uiTextureHandle);
+        }
+		#else
         #pragma omp parallel for num_threads(2) 
 		for(int i = 0; i < layout.size();i++)
 		{
@@ -158,6 +166,7 @@ void BoothUI::render(void)
 		{
 			layout[i]->render(uiPositionHandle, -1, uiTextureHandle);
 		}
+		#endif
 		// Cleanup
 		glUseProgram(0);
 		cur_mat.release();
