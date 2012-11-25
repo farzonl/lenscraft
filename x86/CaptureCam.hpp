@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __CAPTURE__CAM_HPP__
+#define __CAPTURE__CAM_HPP__
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <GL/glew.h>
@@ -33,3 +34,4 @@ class CaptureCam
 		void  getFrame();
 		void setThreadId(GLFWthread id) { t_id = id;}
 };
+#endif //__CAPTURE_CAM_HPP__

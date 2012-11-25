@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef __RADIAL__BLUR_HPP__
+#define __RADIAL__BLUR_HPP__
 
 #include "Effects.hpp"
 #include <algorithm>
@@ -42,3 +44,4 @@ public:
 
 	}
 };
+#endif //__RADIAL__BLUR_HPP__

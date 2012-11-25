@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __RECTANGLE_HPP__
+#define __RECTANGLE_HPP__
 #include "Shape.hpp"
 //#include "shapes2d.h"
 #include <string>
@@ -42,3 +43,4 @@ private:
 	//T *vertexAttributes;
 };
 }
+#endif //__RECTANGLE_HPP__

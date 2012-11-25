@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef __BOOTH__UI_HPP__
+#define __BOOTH__UI_HPP__
 #include "Shader.hpp"
 #include "Rectangle.hpp"
 #include "CaptureCam.hpp"
@@ -50,3 +52,4 @@ class BoothUI
 	std::vector< std::unique_ptr<QUAD_DEF::Rectangle> > layout;
 	cv::Mat cur_mat;
 };
+#endif //__BOOTH__UI_HPP__

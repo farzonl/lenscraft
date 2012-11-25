@@ -1,4 +1,7 @@
-#pragma once
+//#pragma once
+#ifndef __EFFECTS_HPP__
+#define __EFFECTS_HPP__
+
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <GL/glew.h>
@@ -29,3 +32,4 @@ class Original : public Effects
 			this->effect = input;
 		}
 };
+#endif //__EFFECTS_HPP__

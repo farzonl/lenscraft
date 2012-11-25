@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __GRAY_SCALE_HPP__
+#define __GRAY_SCALE_HPP__
 #include "Effects.hpp"
 
 class Grayscale : public Effects
@@ -14,3 +15,5 @@ class Grayscale : public Effects
 			cv::cvtColor(input,this->effect,CV_BGR2GRAY);
 		}
 };
+
+#endif //__GRAY_SCALE_HPP__
