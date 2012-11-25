@@ -9,7 +9,7 @@
 #include <queue>
 
 //extern CRITICAL_SECTION _critSection;
-//extern CONDITION_VARIABLE empty,full;
+//extern pthread_mutex_t mutex_lock;
 
 void cameraThread(void* param);
 
