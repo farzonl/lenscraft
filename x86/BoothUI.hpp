@@ -17,9 +17,6 @@ const int HEIGHT = 600;
 const int ROW_REC = 3;
 const int COL_REC = 3;
 
-//extern CaptureCam *cc;
-void cameraThread(void* param);
-
 class BoothUI
 {
 	
