@@ -5,12 +5,15 @@
 #include <GL/glew.h>
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
-#else
+#elif WIN32
 #include <GL/GL.h>
+#else
+#include <GL/gl.h>
 #endif
 #include <fstream>
 #include <iostream>
-#include <string.h>
+#include <cstring>
+
 
 using std::string;
 using std::ifstream;
@@ -71,7 +74,7 @@ void Shader::loadShaders(const string& vsPath, const string& fsPath)
 		//#ifdef __clang__
         cerr << "Failed to open vertex  shader" << endl;
         throw std::exception();
-       // #else 
+        //#else 
 		//throw std::exception("Failed to open vertex shader");
 		//#endif
 		
@@ -81,7 +84,8 @@ void Shader::loadShaders(const string& vsPath, const string& fsPath)
 	if (!fs.good())
 	{
 		vs.close();
-		//#ifdef __clang__ 
+
+	//#ifdef __clang__ 
         cerr << "Failed to open fragment shader" << endl;
         throw std::exception();
         //#else
@@ -99,12 +103,14 @@ void Shader::loadShaders(const string& vsPath, const string& fsPath)
 
 	if (vs.bad())
 	{
-		//#ifdef __clang__
+	//#ifdef __clang__
+
         cerr << "Error reading vertex shader source" << endl;
         throw std::exception();
-       // #else
+        //#else
 		//throw std::exception("Error reading vertex shader source");
 		//#endif
+
 	}
 
 	fs.seekg(0, std::ios::end);
@@ -149,7 +155,8 @@ int Shader::createShader(int shaderType, const char* source)
 		string error = string(log);
 		delete [] log;
 
-		//#ifdef __clang__
+	//#ifdef __clang__
+
         cerr << error << endl;
         throw std::exception();
         //#else
@@ -180,7 +187,7 @@ int Shader::createProgram(int vShader, int fShader)
 		string error = string(log);
 		delete [] log;
 
-		//#ifdef __clang__
+	//#ifdef __clang__
         cerr << error << endl;
         throw std::exception();
         //#else
