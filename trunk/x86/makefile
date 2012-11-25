@@ -1,13 +1,14 @@
 #_____________G++ STUFF__________________________________________
 #CC = g++
-CC = clang++
-#CC = g++47
+#CC = clang++
+CC = g++47
 
 #ifeq ($(UNAME), Darwin)
 INCPATH = -I /opt/local/include/ -I /usr/local/include/ -I /usr/local/include/glm
 LIBPATH = -L /opt/local/lib/ -L /usr/local/lib/
 #endif
-OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib -lopencv_legacy -stdlib=libc++ -std=c++11 -lglfw -framework OpenGL -framework IOKit -framework Cocoa -lGLEW -lpthread
+#-stdlib=libc++ if you use clang
+OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib  -lopencv_legacy  -std=c++11 -lglfw -framework OpenGL -framework IOKit -framework Cocoa -lGLEW -lpthread
 
 CFLAGS = $(INCPATH) $(LIBPATH) $(OPTIONS) -Wall
 UNAME := $(shell uname)

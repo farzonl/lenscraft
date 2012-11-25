@@ -14,9 +14,14 @@
 #include "radialBlur.hpp"
 #include "mirror.hpp"
 #include "SobelTex.hpp"
+
 #ifndef __clang__
 #include <omp.h>
 #endif
+
+#include <pthread.h>
+
+
 //#include <tbb/parallel_for.h>
 //#include <ppl.h>//parallel_for
 
@@ -111,6 +116,8 @@ void BoothUI::initialize(void)
 {
 	glClearColor(0, 0, 0, 0);
 	glfwCreateThread(cameraThread, &cc);
+	//pthread_t tid;
+	//pthread_create(&tid, NULL,cameraThread,&cc);
 	glEnable(GL_TEXTURE_2D);
 	//aTexture = loadBMP_custom("pics/face.bmp");
 	uiShader.loadShaders("shaders/uiShader.vert", "shaders/uiShader.frag");
