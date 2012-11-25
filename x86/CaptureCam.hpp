@@ -11,6 +11,7 @@
 //extern CRITICAL_SECTION _critSection;
 //extern pthread_mutex_t mutex_lock;
 
+//void *cameraThread(void* param);
 void cameraThread(void* param);
 
 class CaptureCam

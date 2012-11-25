@@ -10,6 +10,7 @@
 #endif
 #include <fstream>
 #include <iostream>
+#include <string.h>
 
 using std::string;
 using std::ifstream;
@@ -64,28 +65,28 @@ void Shader::loadShaders(const string& vsPath, const string& fsPath)
 		program = -1;
 	}
 
-	ifstream vs(vsPath);
+	ifstream vs(vsPath.c_str());
 	if (!vs.good())
 	{
-		#ifdef __clang__
+		//#ifdef __clang__
         cerr << "Failed to open vertex  shader" << endl;
         throw std::exception();
-        #else 
-		throw std::exception("Failed to open vertex shader");
-		#endif
+       // #else 
+		//throw std::exception("Failed to open vertex shader");
+		//#endif
 		
 	}
 
-	ifstream fs(fsPath);
+	ifstream fs(fsPath.c_str());
 	if (!fs.good())
 	{
 		vs.close();
-		#ifdef __clang__ 
+		//#ifdef __clang__ 
         cerr << "Failed to open fragment shader" << endl;
         throw std::exception();
-        #else
-		throw std::exception("Failed to open fragment shader");
-		#endif
+        //#else
+		//throw std::exception("Failed to open fragment shader");
+		//#endif
 	}
 
 	vs.seekg(0, std::ios::end);
@@ -98,12 +99,12 @@ void Shader::loadShaders(const string& vsPath, const string& fsPath)
 
 	if (vs.bad())
 	{
-		#ifdef __clang__
+		//#ifdef __clang__
         cerr << "Error reading vertex shader source" << endl;
         throw std::exception();
-        #else
-		throw std::exception("Error reading vertex shader source");
-		#endif
+       // #else
+		//throw std::exception("Error reading vertex shader source");
+		//#endif
 	}
 
 	fs.seekg(0, std::ios::end);
@@ -115,12 +116,12 @@ void Shader::loadShaders(const string& vsPath, const string& fsPath)
 	fs.read(fragmentSource, size);
 
 	if (fs.bad()) {
-		#ifdef __clang__
+		//#ifdef __clang__
 		cerr << "Error reading fragment shader source" << endl;
 		throw std::exception();
-		#else
-		throw std::exception("Error reading fragment shader source");
-		#endif
+		//#else
+		//throw std::exception("Error reading fragment shader source");
+		//#endif
 	}
 
 	int vShaderId = createShader(GL_VERTEX_SHADER, vertexSource);
@@ -148,12 +149,12 @@ int Shader::createShader(int shaderType, const char* source)
 		string error = string(log);
 		delete [] log;
 
-		#ifdef __clang__
+		//#ifdef __clang__
         cerr << error << endl;
         throw std::exception();
-        #else
-		throw std::exception(error.c_str());
-		#endif
+        //#else
+		//throw std::exception(error.c_str());
+		//#endif
 	}
 
 	return shader;
@@ -179,12 +180,12 @@ int Shader::createProgram(int vShader, int fShader)
 		string error = string(log);
 		delete [] log;
 
-		#ifdef __clang__
+		//#ifdef __clang__
         cerr << error << endl;
         throw std::exception();
-        #else
-		throw std::exception(error.c_str());
-		#endif
+        //#else
+		//throw std::exception(error.c_str());
+		//#endif
 	}
 
 	return program;

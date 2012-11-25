@@ -42,6 +42,7 @@ bool CaptureCam::ready()
 	return !queueMat.empty();
 }
 
+//void *cameraThread(void* param)
 void cameraThread(void* param)
 {	
 
@@ -66,6 +67,7 @@ void  CaptureCam::getFrame()
 	capture.retrieve(camFrame);
 	//cv::flip(camFrame,camFrame,-1 );
 	queueMat.push(camFrame);
+	//cv::imshow("show",camFrame);
 	pthread_mutex_unlock (&mutex_lock);
 	//LeaveCriticalSection (& _critSection);
 	
