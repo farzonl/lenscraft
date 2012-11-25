@@ -1,8 +1,9 @@
 #include "CaptureCam.hpp"
 #include <iostream>
+#include <pthread.h>
 
 //CRITICAL_SECTION _critSection;
-
+pthread_mutex_t mutex_lock;
 
 CaptureCam::CaptureCam():capture( CV_CAP_ANY ),queueMat()
 {
@@ -14,16 +15,18 @@ CaptureCam::CaptureCam():capture( CV_CAP_ANY ),queueMat()
 
 	capture.grab();
 	//InitializeCriticalSection (& _critSection);
+	pthread_mutex_init(&mutex_lock, NULL);
 }
 
 
 CaptureCam::~CaptureCam(void)
 {
-	//cvReleaseCapture( &capture ); //old c way
+	
 	capture.release();
 	glfwDestroyThread(this->t_id);
 	//glfwDestroyMutex(this->m_mutex);
 	//DeleteCriticalSection (& _critSection);
+	pthread_mutex_destroy(&mutex_lock);
 }
 
 cv::Mat CaptureCam::getMat()     
@@ -59,11 +62,12 @@ void  CaptureCam::getFrame()
 {
 	//glfwLockMutex(m_mutex);
 	//EnterCriticalSection (& _critSection);
-	//camFrameRead.release();
+	pthread_mutex_lock (&mutex_lock);
 	capture.retrieve(camFrame);
-	cv::flip(camFrame,camFrame,-1 );
+	//cv::flip(camFrame,camFrame,-1 );
 	queueMat.push(camFrame);
+	pthread_mutex_unlock (&mutex_lock);
 	//LeaveCriticalSection (& _critSection);
-	//camFrameRead = camFrame;
+	
 	//glfwUnlockMutex(m_mutex);
 }
