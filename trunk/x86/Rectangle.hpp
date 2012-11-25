@@ -6,6 +6,7 @@
 #include <string>
 #include "Effects.hpp"
 #include <memory>
+
 namespace QUAD_DEF
 {
 //template <typename T>
