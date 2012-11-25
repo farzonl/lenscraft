@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef __SHAPE_HPP__
+#define __SHAPE_HPP__
 
 #include "BoundingBox.hpp"
 
@@ -75,3 +77,4 @@ protected:
 	int stride;
 };
 
+#endif //__SHAPE_HPP__

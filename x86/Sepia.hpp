@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef __SEPIA_HPP__
+#define __SEPIA_HPP__
 
 #include "Effects.hpp"
 
@@ -18,3 +20,4 @@ class Sepia : public Effects
 		void performEffect(cv::Mat &input);
 		~Sepia() {}
 };
+#endif //__SEPIA_HPP__

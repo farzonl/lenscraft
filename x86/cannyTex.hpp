@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __CANNY_TEX_HPP__
+#define __CANNY_TEX_HPP__
 #include "Effects.hpp"
 
 
@@ -18,3 +19,4 @@ public:
 		
 	}
 };
+#endif //__CANNY_TEX_HPP__
