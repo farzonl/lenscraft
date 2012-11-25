@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __BOUNDING__BOX_HPP__
+#define __BOUNDING__BOX_HPP__
 #include <glm/glm.hpp>
 
 class BoundingBox // Axis aligned (but we don't bother updating yet...)
@@ -20,4 +21,4 @@ private:
 	glm::vec3 bottomRight;
 	glm::mat4* modelMatrix;
 };
-
+#endif //__BOUNDING__BOX_HPP__

@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __MIRROR_HPP__
+#define __MIRROR_HPP__
 #include "Effects.hpp"
 
 
@@ -17,7 +18,7 @@ public:
 		cv::flip(left,right,1);
 		left.copyTo(effect(cv::Rect(0,0, input.cols/2, input.rows)));
 		right.copyTo(effect(cv::Rect(input.cols/2,0, input.cols/2, input.rows)));
-		
 
 	}
 };
+#endif // __MIRROR_HPP__

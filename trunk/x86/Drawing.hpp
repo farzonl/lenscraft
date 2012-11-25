@@ -1,4 +1,7 @@
-#pragma once
+//#pragma once
+
+#ifndef __DRAWING_HPP__
+#define __DRAWING_HPP__
 
 #include "Effects.hpp"
 //#include "opencv2\gpu\gpu.hpp"
@@ -32,7 +35,7 @@ class Drawing : public Effects
 					cv::pyrMeanShiftFiltering(bgr_cpu.clone(),bgr_cpu, sp, sr);
 					//cv::gpu::meanShiftSegmentation(bgr,bgr_cpu,sp,sr,0);
 					bgr.upload(bgr_cpu);
-					
+
 				}
 				#pragma omp section
 				{
@@ -41,7 +44,7 @@ class Drawing : public Effects
 					cv::gpu::cvtColor(edges,edgesBgr,CV_GRAY2BGR);
 				}
 			}
-			
+
 			//bgr = bgr - edgesBgr;
 			cv::gpu::subtract(bgr,edgesBgr,bgr);
 
@@ -51,3 +54,5 @@ class Drawing : public Effects
 			//cv::waitKey(0);
 		}*/
 };
+#endif // __DRAWING_HPP__
+

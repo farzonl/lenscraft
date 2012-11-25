@@ -1,5 +1,6 @@
-#pragma once
-
+//#pragma once
+#ifndef __X_RAY_HPP__
+#define __X_RAY_HPP__
 #include "Effects.hpp"
 
 class Xray : public Effects
@@ -14,3 +15,4 @@ class Xray : public Effects
 			bitwise_not(input, effect);
 		}
 };
+#endif //__X_RAY_HPP__
