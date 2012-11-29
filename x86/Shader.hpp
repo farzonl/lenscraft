@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef __SHADER_HPP__
+#define __SHADER_HPP__
 #include <string>
 
 class Shader
@@ -24,4 +24,4 @@ private:
 private:
 	int program;
 };
-
+#endif

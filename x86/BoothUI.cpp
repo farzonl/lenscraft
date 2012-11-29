@@ -115,7 +115,9 @@ void BoothUI::windowResized(int width, int height)
 void BoothUI::initialize(void)
 {
 	glClearColor(0, 0, 0, 0);
+	#ifdef __WIN32__
 	glfwCreateThread(cameraThread, &cc);
+	#endif
 	//pthread_t tid;
 	//pthread_create(&tid, NULL,cameraThread,&cc);
 	glEnable(GL_TEXTURE_2D);
@@ -136,8 +138,9 @@ void BoothUI::initialize(void)
 
 void BoothUI::render(void)
 {
-
+	#ifdef __WIN32__
 	if(cc.ready())
+	#endif
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -156,13 +159,13 @@ void BoothUI::render(void)
 		}*/
 		//#pragma unroll ROW_REC*COL_REC
 
-		#ifdef __clang__
+		//#ifdef __clang__
 		for(unsigned int i = 0; i < layout.size();i++)
         {
 			layout[i]->eff->performEffect(cur_mat);
             layout[i]->render(uiPositionHandle, -1, uiTextureHandle);
         }
-		#else
+		/*#else
         #pragma omp parallel for num_threads(2) 
 		for(int i = 0; i < layout.size();i++)
 		{
@@ -173,7 +176,7 @@ void BoothUI::render(void)
 		{
 			layout[i]->render(uiPositionHandle, -1, uiTextureHandle);
 		}
-		#endif
+		#endif*/
 		// Cleanup
 		glUseProgram(0);
 		cur_mat.release();
