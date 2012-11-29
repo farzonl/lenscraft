@@ -13,9 +13,10 @@ CaptureCam::CaptureCam():capture( CV_CAP_ANY ),queueMat()
 
 	// Grab the device
 
-	capture.grab();
+	//capture.grab();
 	//InitializeCriticalSection (& _critSection);
-	pthread_mutex_init(&mutex_lock, NULL);
+	//pthread_mutex_init(&mutex_lock, NULL);
+
 }
 
 
@@ -26,15 +27,20 @@ CaptureCam::~CaptureCam(void)
 	glfwDestroyThread(this->t_id);
 	//glfwDestroyMutex(this->m_mutex);
 	//DeleteCriticalSection (& _critSection);
-	pthread_mutex_destroy(&mutex_lock);
+	//pthread_mutex_destroy(&mutex_lock);
 }
 
 cv::Mat CaptureCam::getMat()     
 {
-	//while(queueMat.empty()){}
+	#ifdef __WIN32__
 	cv::Mat retMat = queueMat.front();
 	queueMat.pop();
 	return retMat;
+	#else
+	capture >> camFrame;
+	cv::flip(camFrame,camFrame,-1 );
+	return camFrame.clone();
+	#endif
 }
 
 bool CaptureCam::ready()
@@ -52,7 +58,6 @@ void cameraThread(void* param)
 	while(1)
 	{
 		cc->getFrame();
-		//cvWaitKey(0);
 	}
 	//glfwDestroyThread(glfwGetThreadID());
 
@@ -64,8 +69,9 @@ void  CaptureCam::getFrame()
 	//glfwLockMutex(m_mutex);
 	//EnterCriticalSection (& _critSection);
 	pthread_mutex_lock (&mutex_lock);
-	capture.retrieve(camFrame);
-	//cv::flip(camFrame,camFrame,-1 );
+	//capture.retrieve(camFrame);
+	capture >> camFrame;
+	cv::flip(camFrame,camFrame,-1 );
 	queueMat.push(camFrame);
 	//cv::imshow("show",camFrame);
 	pthread_mutex_unlock (&mutex_lock);
