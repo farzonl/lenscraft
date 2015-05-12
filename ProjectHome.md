@@ -1,0 +1,1 @@
+Adds filters to photos you take with a webcam.
