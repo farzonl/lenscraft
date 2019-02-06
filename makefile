@@ -3,15 +3,15 @@ UNAME := $(shell uname)
 
 ifeq ($(UNAME), Darwin)
 #CC = clang++ -stdlib=libc++
-CC =g++47
+CC = g++
 INCPATH = -I /opt/local/include/ -I /usr/local/include/ -I /usr/local/include/glm
 LIBPATH = -L /opt/local/lib/ -L /usr/local/lib/
 CCFLAGS = -framework OpenGL -framework IOKit -framework Cocoa -std=c++11
 endif
 ifeq ($(UNAME), Linux)
 CC = g++
-INCPATH = -I. -I/home/farzon/OpenCV-2.4.3/include -I /usr/include/
-LIBPATH = -L/home/farzon/OpenCV-2.4.3/release/lib/ -L /usr/lib/
+INCPATH = -I. -I /usr/local/include/ -I /usr/include/
+LIBPATH = -L /usr/local/lib -L /usr/lib/
 CCFLAGS = -std=c++0x -DGLEW_STATIC -lGL -lGLU
 endif
 OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib -lopencv_legacy -lglfw -lGLEW -lpthread -fopenmp
@@ -42,7 +42,7 @@ ifeq ($(UNAME), Darwin)
 endif
 
 run-valgrind : build-debug
-    valgrind --leak-check=yes --show-reachable=yes --tool=memcheck ./EXE
+	valgrind --leak-check=yes --show-reachable=yes --tool=memcheck ./EXE
 
 build-release : CFLAGS += -O3
 
