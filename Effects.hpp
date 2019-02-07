@@ -5,7 +5,8 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <GL/glew.h>
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
+#include <opencv2/imgproc/imgproc.hpp> 
 
 class Effects
 {

@@ -1,4 +1,5 @@
 #include "Effects.hpp"
+#include <iostream>
 
 GLuint Effects::genTexture()
 {

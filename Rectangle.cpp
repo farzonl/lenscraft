@@ -1,6 +1,6 @@
 
 #include <GL/glew.h>   //OGL ext lib
-#include <GL/glfw.h>    //OGL windowing lib
+#include <GLFW/glfw3.h>    //OGL windowing lib
 #include <glm/glm.hpp> //OGL matrix library
 #include <glm/gtc/type_ptr.hpp>
 #include "Rectangle.hpp"

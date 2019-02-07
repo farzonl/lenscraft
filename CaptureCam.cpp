@@ -22,15 +22,11 @@ CaptureCam::CaptureCam():capture( CV_CAP_ANY ),queueMat()
 
 CaptureCam::~CaptureCam(void)
 {
-	
 	capture.release();
-	glfwDestroyThread(this->t_id);
-	//glfwDestroyMutex(this->m_mutex);
-	//DeleteCriticalSection (& _critSection);
-	//pthread_mutex_destroy(&mutex_lock);
+	t_id->join();
 }
 
-cv::Mat CaptureCam::getMat()     
+cv::Mat CaptureCam::getMat()
 {
 	#ifdef __WIN32__
 	cv::Mat retMat = queueMat.front();
@@ -54,7 +50,6 @@ void cameraThread(void* param)
 
 	CaptureCam *cc = (CaptureCam*)param;
 	// Retrieve desired sensor data (in this case the standard camera image)
-	cc->setThreadId(glfwGetThreadID());
 	while(1)
 	{
 		cc->getFrame();

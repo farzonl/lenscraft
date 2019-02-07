@@ -1,18 +1,14 @@
 //#pragma once
 #ifndef __CAPTURE__CAM_HPP__
 #define __CAPTURE__CAM_HPP__
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
 #include <GL/glew.h>
-#include <GL/glfw.h>
-//#include <Windows.h>
-//#include <thread>
+#include <GLFW/glfw3.h>
 #include <queue>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
+#include <thread>
 
-//extern CRITICAL_SECTION _critSection;
-//extern pthread_mutex_t mutex_lock;
-
-//void *cameraThread(void* param);
 void cameraThread(void* param);
 
 class CaptureCam
@@ -22,7 +18,7 @@ class CaptureCam
 	cv::Mat camFrame;
 	std::queue<cv::Mat> queueMat;
 
-	GLFWthread t_id;
+	std::thread *t_id;
 	public:
 		bool ready();
 		cv::Mat getMat();
@@ -32,6 +28,6 @@ class CaptureCam
 		~CaptureCam();
 		cv::VideoCapture getCap() const {return capture;}
 		void  getFrame();
-		void setThreadId(GLFWthread id) { t_id = id;}
+		void initCamThread() { t_id = new std::thread(cameraThread, this);}
 };
 #endif //__CAPTURE_CAM_HPP__

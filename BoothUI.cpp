@@ -1,7 +1,7 @@
 #include "BoothUI.hpp"
 
 #include <GL/glew.h>
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -18,9 +18,6 @@
 #ifndef __clang__
 #include <omp.h>
 #endif
-
-#include <pthread.h>
-
 
 //#include <tbb/parallel_for.h>
 //#include <ppl.h>//parallel_for
@@ -115,11 +112,8 @@ void BoothUI::windowResized(int width, int height)
 void BoothUI::initialize(void)
 {
 	glClearColor(0, 0, 0, 0);
-	#ifdef __WIN32__
-	glfwCreateThread(cameraThread, &cc);
-	#endif
-	//pthread_t tid;
-	//pthread_create(&tid, NULL,cameraThread,&cc);
+	cc.initCamThread();
+	
 	glEnable(GL_TEXTURE_2D);
 	//aTexture = loadBMP_custom("pics/face.bmp");
 	uiShader.loadShaders("shaders/uiShader.vert", "shaders/uiShader.frag");
