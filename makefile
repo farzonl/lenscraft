@@ -1,28 +1,33 @@
-#_____________G++ STUFF__________________________________________
-UNAME := $(shell uname)
-
-ifeq ($(UNAME), Darwin)
-#CC = clang++ -stdlib=libc++
-CC = g++
-INCPATH = -I /opt/local/include/ -I /usr/local/include/ -I /usr/local/include/glm
-LIBPATH = -L /opt/local/lib/ -L /usr/local/lib/
-CCFLAGS = -framework OpenGL -framework IOKit -framework Cocoa -std=c++11
-endif
-ifeq ($(UNAME), Linux)
-CC = g++
-INCPATH = -I. -I /usr/local/include/ -I /usr/include/
-LIBPATH = -L /usr/local/lib -L /usr/lib/
-CCFLAGS = -std=c++0x -DGLEW_STATIC -lGL -lGLU
-endif
-OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib -lopencv_legacy -lglfw -lGLEW -lpthread -fopenmp
-
-CFLAGS = $(INCPATH) $(LIBPATH) $(OPTIONS) $(CCFLAGS) -Wall
+#_____________STATIC STUFF________________________________________________
+FILES := $(shell echo *.cpp  | sed -e 's/cpp/o/g')
 UNAME := $(shell uname)
 EXE     := $(UNAME)_lens_craft
-#_____________G++________________________________________________
+#_____________STATIC STUFF________________________________________________
+
+ifeq ($(UNAME), Darwin)
+CXX = clang++ -stdlib=libc++
+INCPATH = -I /opt/local/include/ -I /usr/local/include/
+LIBPATH = -L /usr/local/lib/
+CXXFLAGS = -framework OpenGL -framework IOKit -framework Cocoa -std=c++11
+endif
+ifeq ($(UNAME), Linux)
+CXX = g++
+INCPATH = -I. -I /usr/local/include/ -I /usr/include/
+LIBPATH = -L /usr/local/lib -L /usr/lib/
+CXXFLAGS = -std=c++0x -DGLEW_STATIC -lGL -lGLU
+endif
+OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib -lopencv_legacy -lglfw -lGLEW -lpthread
+
+CFLAGS = $(INCPATH) $(LIBPATH) $(OPTIONS) $(CXXFLAGS) -Wall
+UNAME := $(shell uname)
+
+build : build-release
 
 run : build-release
 	./$(EXE) 
+
+initDep :
+	bash uzDep.sh
 
 run-debug : build-debug
 	./$(EXE) 
@@ -44,31 +49,17 @@ endif
 run-valgrind : build-debug
 	valgrind --leak-check=yes --show-reachable=yes --tool=memcheck ./EXE
 
+build-release : initDep
 build-release : CFLAGS += -O3
+build-release : $(EXE)
 
-build-release : Effects.o Shape.o BoothUI.o ShaderCode.o CaptureCam.o
-	$(CC) $(CFLAGS) main.cpp *.o -o $(EXE)
+%.o: %.cpp
+	$(CXX) -c -o $@ $< $(CFLAGS)
 
-build-debug : CFLAGS += -g -DDEBUG
-build-debug : Effects.o Shape.o BoothUI.o ShaderCode.o CaptureCam.o
-	$(CC) $(CFLAGS) main.cpp *.o  -o $(EXE)
-
-Effects.o : Effects.cpp Effects.hpp
-	$(CC) $(CFLAGS) -c Effects.cpp Grayscale.cpp Grayscale.hpp Sepia.cpp Sepia.hpp Contrast.cpp Contrast.hpp Drawing.cpp Drawing.hpp Xray.cpp Xray.cpp cannyTex.hpp SobelTex.hpp mirror.hpp radialBlur.hpp
-
-Shape.o :  Shape.cpp  Shape.hpp
-	$(CC) $(CFLAGS) -c  Shape.cpp  Shape.hpp BoundingBox.cpp BoundingBox.hpp Rectangle.hpp Rectangle.cpp
-
-BoothUI.o : BoothUI.cpp BoothUI.hpp
-	$(CC) $(CFLAGS) -c BoothUI.cpp BoothUI.hpp
-
-ShaderCode.o : Shader.cpp Shader.hpp
-	$(CC) $(CFLAGS) -c Shader.cpp Shader.hpp 
-
-CaptureCam.o : CaptureCam.hpp CaptureCam.cpp
-	$(CC) $(CFLAGS) -c CaptureCam.hpp CaptureCam.cpp
+$(EXE) : $(FILES)
+	$(CXX) $^ -o $(EXE) $(CFLAGS)
 
 clean :
-	rm *.o* $(EXE)* || rm -r $(BINDIR)
+	rm -rf *.o* *.gch $(EXE)*
 
 

@@ -1,0 +1,30 @@
+cache: ccache
+language: c++
+sudo: required
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode 8.3
+      compiler: clang++
+      addons:
+        homebrew:
+          packages:
+           - ccache
+           - pkg-config
+           - glew
+          update: true
+      install:
+        - export PATH="/usr/local/opt/ccache/libexec:$PATH"
+      script:
+       - make
+    - os: linux
+      compiler: g++
+      before_install:
+        - sudo apt-get update
+        - sudo apt-get install -y libglew-dev
+      script:
+        - make
+      after_success:
+       - export CODECOV_TOKEN="ff73db72-4809-42e3-8298-2b6cdcc0e455"
+       - gcov *.cpp
+       - bash <(curl -s https://codecov.io/bash)

@@ -1,0 +1,8 @@
+glm-0.9.9.5.zip
+glm/
+glfw-2.7.9/
+opencv-2.4.13.5.zip
+opencv-2.4.13.5/
+*.gch
+*.o
+.DS_Store
