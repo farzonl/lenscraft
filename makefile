@@ -14,7 +14,7 @@ ifeq ($(UNAME), Linux)
 CXX = g++
 INCPATH = -I. -I /usr/local/include/ -I /usr/include/
 LIBPATH = -L /usr/local/lib -L /usr/lib/
-CXXFLAGS = -std=c++0x -DGLEW_STATIC -lGL -lGLU
+CXXFLAGS = -std=c++0x -DGLEW_STATIC -lGL -lGLU -lXxf86vm -lXext -lX11
 endif
 OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib -lopencv_legacy -lglfw -lGLEW -lpthread
 

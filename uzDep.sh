@@ -34,7 +34,7 @@ if [ "$UNAME" = "Darwin" ]; then
     glfwPath=$(pkg-config libglfw --cflags )
     if [[ -z "$glfwPath" ]]; then
 	    make -C glfw-2.7.9 cocoa
-        make -C glfw-2.7.9 cocoa-install 
+        sudo make -C glfw-2.7.9 cocoa-install 
     fi
     opencvPath=$(pkg-config opencv --cflags )
     if [[ -z "$opencvPath" ]]; then
@@ -49,12 +49,12 @@ if [ "$UNAME" = "Linux" ]; then
     glfwPath=$(pkg-config libglfw --cflags )
     if [[ -z "$glfwPath" ]]; then
 	    make -C glfw-2.7.9 x11
-        make -C glfw-2.7.9 x11-install
+        sudo make -C glfw-2.7.9 x11-install
     fi
-    oopencvPath=$(pkg-config opencv --cflags )
+    opencvPath=$(pkg-config opencv --cflags )
     if [[ -z "$opencvPath" ]]; then
         pushd "$DIR/$opencv/release"
-        cmake -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=/usr/bin/g++ CMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_FFMPEG=OFF -DWITH_TBB=ON -DWITH_OPENGL=ON -DINSTALL_TO_MANGLED_PATHS=ON -DINSTALL_CREATE_DISTRIB=ON -DENABLE_FAST_MATH=ON -DWITH_IMAGEIO=ON -DBUILD_SHARED_LIBS=OFF -DWITH_GSTREAMER=ON ..
+        cmake -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=/usr/bin/g++ CMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_FFMPEG=OFF -DWITH_JPEG=OFF -DWITH_PNG=OFF -DWITH_TIFF=OFF -DWITH_TBB=ON -DWITH_OPENGL=ON -DINSTALL_TO_MANGLED_PATHS=ON -DINSTALL_CREATE_DISTRIB=ON -DENABLE_FAST_MATH=ON -DWITH_IMAGEIO=ON -DBUILD_SHARED_LIBS=OFF -DWITH_GSTREAMER=ON ..
         make all -j$(nproc) # Uses all machine cores
         sudo make install
         popd
