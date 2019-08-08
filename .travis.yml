@@ -1,4 +1,3 @@
-cache: ccache
 language: c++
 sudo: required
 matrix:
@@ -9,16 +8,14 @@ matrix:
       addons:
         homebrew:
           packages:
-           - ccache
            - pkg-config
            - glew
           update: true
-      install:
-        - export PATH="/usr/local/opt/ccache/libexec:$PATH"
       script:
        - make
     - os: linux
       compiler: g++
+      cache: ccache
       before_install:
         - sudo apt-get update
         - sudo apt-get install -y libglew-dev libxxf86vm-dev
