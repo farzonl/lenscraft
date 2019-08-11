@@ -10,8 +10,11 @@ matrix:
           packages:
            - pkg-config
            - glew
+           - glm
            - opencv@2
           update: true
+      before_install:
+        - export PKG_CONFIG_PATH="/usr/local/opt/opencv@2/lib/pkgconfig"
       script:
        - make
     - os: linux
