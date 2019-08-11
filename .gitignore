@@ -6,3 +6,4 @@ opencv-2.4.13.5/
 *.gch
 *.o
 .DS_Store
+*_lens_craft

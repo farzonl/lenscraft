@@ -3,23 +3,20 @@ FILES := $(shell echo *.cpp  | sed -e 's/cpp/o/g')
 UNAME := $(shell uname)
 EXE     := $(UNAME)_lens_craft
 #_____________STATIC STUFF________________________________________________
-
+OCV_FLGS := `pkg-config opencv --libs --cflags`
+GLFW_FLGS:= `pkg-config libglfw --libs --cflags`
+GLEW_FLGS:= `pkg-config glew --libs --cflags`
+OGL_FLGS := $(GLFW_FLGS) $(GLEW_FLGS)
 ifeq ($(UNAME), Darwin)
-CXX = clang++ -stdlib=libc++
-INCPATH = -I /opt/local/include/ -I /usr/local/include/
-LIBPATH = -L /usr/local/lib/
-CXXFLAGS = -framework OpenGL -framework IOKit -framework Cocoa -std=c++11
+CXX = clang++
 endif
 ifeq ($(UNAME), Linux)
 CXX = g++
-INCPATH = -I. -I /usr/local/include/ -I /usr/include/
-LIBPATH = -L /usr/local/lib -L /usr/lib/
-CXXFLAGS = -std=c++0x -DGLEW_STATIC -lGL -lGLU -lXxf86vm -lXext -lX11
+#OGL_FLGS += -DGLEW_STATIC 
+OGL_FLGS += -lXxf86vm -lXext -lX11 -lz
 endif
-OPTIONS = -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_highgui -lopencv_contrib -lopencv_legacy -lglfw -lGLEW -lpthread
 
-CFLAGS = $(INCPATH) $(LIBPATH) $(OPTIONS) $(CXXFLAGS) -Wall
-UNAME := $(shell uname)
+CXXFLAGS = $(OCV_FLGS) $(OGL_FLGS) -Wall -std=c++11
 
 build : build-release
 
@@ -50,14 +47,14 @@ run-valgrind : build-debug
 	valgrind --leak-check=yes --show-reachable=yes --tool=memcheck ./EXE
 
 build-release : initDep
-build-release : CFLAGS += -O3
+build-release : CXXFLAGS += -O3
 build-release : $(EXE)
 
 %.o: %.cpp
-	$(CXX) -c -o $@ $< $(CFLAGS)
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 $(EXE) : $(FILES)
-	$(CXX) $^ -o $(EXE) $(CFLAGS)
+	$(CXX) $^ -o $(EXE) $(CXXFLAGS)
 
 clean :
 	rm -rf *.o* *.gch $(EXE)*
