@@ -18,6 +18,7 @@ endif
 
 CXXFLAGS = $(OCV_FLGS) $(OGL_FLGS) -Wall -std=c++11
 
+build : initDep
 build : build-release
 
 run : build-release
@@ -46,7 +47,6 @@ endif
 run-valgrind : build-debug
 	valgrind --leak-check=yes --show-reachable=yes --tool=memcheck ./EXE
 
-build-release : initDep
 build-release : CXXFLAGS += -O3
 build-release : $(EXE)
 

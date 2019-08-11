@@ -1,9 +1,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 UNAME="$(uname)"
-glfwPath=$(pkg-config libglfw --cflags )
-if [[ -z "$glfwPath" ]]; then
-    echo "glfwPath is: $glfwPath"
+glfwVersion=$(pkg-config libglfw --modversion )
+if [[ -z "$glfwVersion" ]]; then
     # Unzip the dependency
     if [ ! -d "$DIR/glfw-2.7.9" ]; then
         unzip "$DIR/glfw-2.7.9.zip" -d $DIR
@@ -20,29 +19,42 @@ if [[ -z "$glfwPath" ]]; then
     fi
 fi
 
-if [ "$UNAME" = "Linux" ]; then
-    glmPath=$(pkg-config glm --cflags )
-    if [[ -z "$glmPath" ]]; then
-        # fetch the dependency
-        if [ ! -f "$DIR/glm-0.9.9.5.zip" ]; then
-            wget "https://github.com/g-truc/glm/releases/download/0.9.9.5/glm-0.9.9.5.zip"
-        fi
+glmVersion=$(pkg-config glm --modversion )
+if [[ -z "$glmVersion" ]]; then
+    glmVersion=$(whereis glm )
+fi
 
-        # Unzip the dependency
-        if [ ! -d "$DIR/glm" ]; then
-            unzip "$DIR/glm-0.9.9.5.zip" -d $DIR
-            mkdir "$DIR/glm/release"
-        fi
-
-        # Build the dependency
-        pushd "$DIR/glm/release"
-        cmake ../
-        make all -j$(nproc)
-        sudo make install
-        popd
+if [[ -z "$glmVersion" ]]; then
+    # fetch the dependency
+    if [ ! -f "$DIR/glm-0.9.9.5.zip" ]; then
+        wget "https://github.com/g-truc/glm/releases/download/0.9.9.5/glm-0.9.9.5.zip"
     fi
-    opencvPath=$(pkg-config opencv --cflags )
-    if [[ -z "$opencvPath" ]]; then
+
+    # Unzip the dependency
+    if [ ! -d "$DIR/glm" ]; then
+        unzip "$DIR/glm-0.9.9.5.zip" -d $DIR
+        mkdir "$DIR/glm/release"
+    fi
+
+    # Build the dependency
+    pushd "$DIR/glm/release"
+    cmake ../
+    make all -j$(nproc)
+    sudo make install
+    popd
+fi
+
+# building opencv2 from scratch on mac takes too much
+# time,lets only build it for linux if we have too.
+if [ "$UNAME" = "Linux" ]; then
+    opencvVersion=$(pkg-config opencv --modversion )
+    badversion="3.0.0"
+    if [ "$(printf '%s\n' "$requiredver" "$opencvVersion" | sort -V | head -n1)" = "$requiredver" ]; then
+        echo "version of Opencv installed: ($opencvVersion) is too new, unistalling!"
+        sudo apt-get uninstall libopencv-dev
+        opencvVersion=$(pkg-config opencv --modversion )
+    fi
+    if [[ -z "$opencvVersion" ]]; then
         opencv="opencv-2.4.13.5"
         # fetch the dependency
         if [ ! -f "$DIR/$opencv.zip" ]; then

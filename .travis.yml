@@ -12,17 +12,29 @@ matrix:
            - glew
            - glm
            - opencv@2
+           - ccache
           update: true
       before_install:
         - export PKG_CONFIG_PATH="/usr/local/opt/opencv@2/lib/pkgconfig"
+        - export PATH="/usr/local/opt/ccache/libexec:$PATH"
       script:
        - make
     - os: linux
+      dist: trusty
       compiler: g++
       cache: ccache
       before_install:
         - sudo apt-get update
-        - sudo apt-get install -y libglew-dev libxxf86vm-dev
+        - sudo apt-get install -y libopencv-dev libglew-dev libglfw-dev libglm-dev libxxf86vm-dev
+      script:
+        - make
+    - os: linux
+      dist: xenial
+      compiler: g++
+      cache: ccache
+      before_install:
+        - sudo apt-get update
+        - sudo apt-get install -y libopencv-dev libglew-dev libglfw-dev libglm-dev libxxf86vm-dev
       script:
         - make
       after_success:
