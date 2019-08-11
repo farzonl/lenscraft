@@ -49,9 +49,9 @@ fi
 if [ "$UNAME" = "Linux" ]; then
     opencvVersion=$(pkg-config opencv --modversion )
     badversion="3.0.0"
-    if [ "$(printf '%s\n' "$requiredver" "$opencvVersion" | sort -V | head -n1)" = "$requiredver" ]; then
+    if [ "$(printf '%s\n' "$badversion" "$opencvVersion" | sort -V | head -n1)" = "$badversion" ]; then
         echo "version of Opencv installed: ($opencvVersion) is too new, unistalling!"
-        sudo apt-get uninstall libopencv-dev
+        sudo apt-get remove libopencv-dev
         opencvVersion=$(pkg-config opencv --modversion )
     fi
     if [[ -z "$opencvVersion" ]]; then
